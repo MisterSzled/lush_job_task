@@ -2,10 +2,11 @@ import { Product } from '@/src/types/product';
 import { Text } from '@/src/components/ui/text';
 import { Card } from '@/src/components/ui/card';
 import React from 'react'
-import { Image, View } from 'react-native';
+import { Image, TouchableOpacity, View } from 'react-native';
 import ProductBanner from './Banner';
 import ProductQuantityButton from './QuantityButton';
 import ProductQuantityControl from './QuantityControl';
+import { router } from 'expo-router';
 
 interface Props {
         product: Product,
@@ -13,21 +14,28 @@ interface Props {
 
 const ProductCard = ({ product }: Props) => {
 
+        const handleProductPress = () => {
+                router.push(`/product/${product.slug}`)
+        }
+
         const is_best_seller = product?.collections?.some(collection => collection.slug === "bestsellers");
 
         return (
                 <Card className='flex justify-between w-full h-full pt-0 pb-2 bg-transparent border-none'>
-                        <Image
-                                className="w-full"
-                                alt={product.thumbnail.alt}
-                                resizeMode='cover'
-                                style={{
-                                        aspectRatio: 1.2
-                                }}
-                                source={{
-                                        uri: product.thumbnail.url,
-                                }}
-                        />
+                        <TouchableOpacity onPress={handleProductPress}>
+                                <Image
+                                        className="w-full"
+                                        alt={product.thumbnail.alt}
+                                        resizeMode='cover'
+                                        style={{
+                                                aspectRatio: 1.2
+                                        }}
+                                        source={{
+                                                uri: product.thumbnail.url,
+                                        }}
+                                />
+                        </TouchableOpacity>
+
                         {is_best_seller && <ProductBanner variant="bestsellers" />}
 
                         <View className="flex ">
@@ -39,9 +47,12 @@ const ProductCard = ({ product }: Props) => {
                                         )}
                                 </View>
 
-                                <Text className='text-xl font-semibold'>
-                                        {product.name}
-                                </Text>
+                                <TouchableOpacity onPress={handleProductPress}>
+                                        <Text className='text-xl font-semibold'>
+                                                {product.name}
+                                        </Text>
+                                </TouchableOpacity>
+                                
                                 <Text className='text-base font-semibold'>
                                         £{product.minPrice}
                                 </Text>

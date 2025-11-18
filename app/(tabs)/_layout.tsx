@@ -2,6 +2,8 @@ import { THEME } from '@/lib/theme';
 import { ThemeToggle } from '@/src/components/ThemeToggle';
 import { Stack } from 'expo-router';
 import { useColorScheme } from 'nativewind';
+import React from 'react';
+
 export {
         ErrorBoundary,
 } from 'expo-router';

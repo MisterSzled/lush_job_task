@@ -1,5 +1,7 @@
 import { Tabs } from 'expo-router';
 import { ShoppingBag, ShoppingBasket } from 'lucide-react-native';
+import React from 'react';
+
 export {
         ErrorBoundary,
 } from 'expo-router';
