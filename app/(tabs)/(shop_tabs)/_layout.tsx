@@ -34,6 +34,14 @@ export default function RootLayout() {
                                 }}
                         />
 
+                        <Tabs.Screen
+                                name="product/[slug]"
+                                options={{
+                                        title: "(stacks)",
+                                        href: null,
+                                        
+                                }}
+                        />
                 </Tabs>
         );
 }

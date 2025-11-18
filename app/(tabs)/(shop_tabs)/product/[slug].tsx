@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import { useProduct } from '@/src/hooks/useProduct';
 import { useLocalSearchParams } from 'expo-router';
 import ProductCard from '@/src/components/shop/ProductDisplay/Card';
@@ -16,8 +16,23 @@ export default function Screen() {
         }
 
         return (
-                <View className='flex items-center justify-center mx-2'>
-                        <ProductCard product={data} describe/>
+                <View className="flex items-center justify-center">
+
+                        <FlatList
+                                data={[data]}
+                                key={1}
+                                numColumns={1}
+                                contentContainerStyle={{
+                                        margin: 16,
+                                        gap: 16
+                                }}
+                                renderItem={({ item }) => (
+                                        <View className='flex flex-1 ' key={item.id}>
+                                                <ProductCard product={data} describe />
+                                        </View>
+                                )}
+                        />
                 </View>
+
         );
 }
