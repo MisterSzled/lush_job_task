@@ -1,1 +1,1 @@
-# lush_job_task
+Had to use product.name as the key in redux for demo purposes as the id's are all the same.
