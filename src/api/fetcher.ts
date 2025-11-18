@@ -12,13 +12,14 @@ function resolvePayload<T>(payload: any): T {
 
 export async function fetcher<T = any>(
         endpoint: Endpoint,
-        body?: any
+        body?: any,
+        params?: any
 ): Promise<T> {
         if (USE_MOCK) {
                 if (!endpoint.mock) {
                         throw new Error("No mock defined")
                 }
-                const json = await endpoint.mock({ body }) as Promise<T>
+                const json = await endpoint.mock({ body, params }) as Promise<T>
                 return resolvePayload<T>(json);
         }
 
@@ -27,7 +28,7 @@ export async function fetcher<T = any>(
         const response = await fetch(url, {
                 method: endpoint.method,
                 headers: { "Content-Type": "application/json" },
-                body: body ? JSON.stringify(body) : undefined
+                body: body ? JSON.stringify(body) : undefined,
         });
 
         if (!response.ok) {

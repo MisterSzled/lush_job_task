@@ -4,7 +4,6 @@ import { Card } from '@/src/components/ui/card';
 import React from 'react'
 import { Image, TouchableOpacity, View } from 'react-native';
 import ProductBanner from './Banner';
-import ProductQuantityButton from './QuantityButton';
 import ProductQuantityControl from './QuantityControl';
 import { router } from 'expo-router';
 
@@ -13,9 +12,8 @@ interface Props {
 }
 
 const ProductCard = ({ product }: Props) => {
-
         const handleProductPress = () => {
-                router.push(`/product/${product.slug}`)
+                router.navigate(`/product/${product.slug}`);
         }
 
         const is_best_seller = product?.collections?.some(collection => collection.slug === "bestsellers");
