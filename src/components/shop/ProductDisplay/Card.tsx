@@ -2,16 +2,19 @@ import { Product } from '@/src/types/product';
 import { Text } from '@/src/components/ui/text';
 import { Card } from '@/src/components/ui/card';
 import React from 'react'
-import { Image, TouchableOpacity, View } from 'react-native';
+import { Image, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 import ProductBanner from './Banner';
 import ProductQuantityControl from './QuantityControl';
 import { router } from 'expo-router';
+import RenderHTML from "react-native-render-html";
 
 interface Props {
         product: Product,
+        describe?: boolean,
 }
 
-const ProductCard = ({ product }: Props) => {
+const ProductCard = ({ product, describe }: Props) => {
+        const { width } = useWindowDimensions();
         const handleProductPress = () => {
                 router.navigate(`/product/${product.slug}`);
         }
@@ -19,7 +22,7 @@ const ProductCard = ({ product }: Props) => {
         const is_best_seller = product?.collections?.some(collection => collection.slug === "bestsellers");
 
         return (
-                <Card className='flex justify-between w-full h-full pt-0 pb-2 bg-transparent border-none'>
+                <Card className='flex justify-between w-full h-full pt-0 pb-2 bg-transparent border-none max-w-[500]'>
                         <TouchableOpacity onPress={handleProductPress}>
                                 <Image
                                         className="w-full"
@@ -50,10 +53,19 @@ const ProductCard = ({ product }: Props) => {
                                                 {product.name}
                                         </Text>
                                 </TouchableOpacity>
-                                
+
                                 <Text className='text-base font-semibold'>
                                         £{product.minPrice}
                                 </Text>
+
+                                {describe &&
+                                        <View>
+                                                <RenderHTML
+                                                        contentWidth={width}
+                                                        source={{ html: product.description }}
+                                                />
+                                        </View>
+                                }
 
 
                                 <ProductQuantityControl product={product} />

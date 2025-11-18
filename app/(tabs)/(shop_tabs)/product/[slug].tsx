@@ -1,19 +1,23 @@
 import * as React from 'react';
-import Detail from '@/src/components/shop/ProductDisplay/Detail';
 import { View } from 'react-native';
-import { Text } from '@/src/components/ui/text';
 import { useProduct } from '@/src/hooks/useProduct';
 import { useLocalSearchParams } from 'expo-router';
+import ProductCard from '@/src/components/shop/ProductDisplay/Card';
+import { Skeleton } from '@/src/components/ui/skeleton';
 
 export default function Screen() {
         const product_slug = useLocalSearchParams().slug;
         const { data, isLoading, isError } = useProduct(product_slug as string);
 
-        console.log(data)
+        if (isLoading || !data) {
+                return <View>
+                        <Skeleton key={"product"} className="h-[20px] w-[100px] rounded-full" />
+                </View>
+        }
 
         return (
-                <View>
-                        <Text>Words</Text>
+                <View className='flex items-center justify-center mx-2'>
+                        <ProductCard product={data} describe/>
                 </View>
         );
 }
